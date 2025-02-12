@@ -99,6 +99,17 @@ int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
 			break;
 
 		p = meta.buf;
+		if (!*p) {
+			flush_diff_queue(&revs.diffopt);
+			/*
+			 * When the diff queue is explicitly flushed, append an
+			 * additional terminator to separate batches of diffs.
+			 */
+			fprintf(revs.diffopt.file, "%c",
+				revs.diffopt.line_termination);
+			continue;
+		}
+
 		if (*p != ':')
 			die("invalid raw diff input");
 		p++;

@@ -32,6 +32,10 @@ compute diffs progressively over the course of multiple invocations of
 Each blob pair is fed to the diff machinery individually queued and the output
 is flushed on stdin EOF.
 
+To explicitly flush the diff queue, a single nul byte can be written to stdin
+between filepairs. Diff output between flushes is separated by a single line
+terminator.
+
 OPTIONS
 -------
 

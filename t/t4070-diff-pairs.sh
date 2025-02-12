@@ -77,4 +77,26 @@ test_expect_success 'split input across multiple diff-pairs' '
 	test_cmp expect actual
 '
 
+test_expect_success 'diff-pairs explicit queue flush' '
+	git diff-tree -r -M -C -C -z base new >input &&
+	printf "\0" >>input &&
+	git diff-tree -r -M -C -C -z base new >>input &&
+
+	git diff-tree -r -M -C -C base new >expect &&
+	printf "\n" >>expect &&
+	git diff-tree -r -M -C -C base new >>expect &&
+
+	git diff-pairs <input >actual &&
+	test_cmp expect actual
+'
+j
+test_expect_success 'diff-pairs explicit queue flush null terminated' '
+	git diff-tree -r -M -C -C -z base new >expect &&
+	printf "\0" >>expect &&
+	git diff-tree -r -M -C -C -z base new >>expect &&
+
+	git diff-pairs -z <expect >actual &&
+	test_cmp expect actual
+'
+
 test_done
