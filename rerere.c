@@ -1170,7 +1170,7 @@ static timestamp_t rerere_created_at(struct rerere_id *id)
 {
 	struct strbuf buf = STRBUF_INIT;
 	struct stat st;
-	int ret;
+	timestamp_t ret;
 
 	ret = stat(rerere_path(&buf, id, "preimage"), &st) ? (time_t) 0 : st.st_mtime;
 
@@ -1182,7 +1182,7 @@ static timestamp_t rerere_last_used_at(struct rerere_id *id)
 {
 	struct strbuf buf = STRBUF_INIT;
 	struct stat st;
-	int ret;
+	timestamp_t ret;
 
 	ret = stat(rerere_path(&buf, id, "postimage"), &st) ? (time_t) 0 : st.st_mtime;
 
